@@ -2,7 +2,7 @@ import React from "react";
 
 function Avatar() {
   return (
-    <div className="h-screen w-full p-20 flex justify-center items-center">
+    <div className="w-full p-20 flex justify-center items-center">
       <div className="">
         <h6>KAKUNA</h6>
         <img
