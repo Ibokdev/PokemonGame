@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function AvatarCard({ fighter }) {
   const [Card, setCard] = useState({});
@@ -9,7 +10,7 @@ function AvatarCard({ fighter }) {
   const getAvatars = async () => {
     try {
       const response = await axios.get(fighter.url);
-      console.log(response.data);
+      // console.log(response.data);
       setCard(response.data);
     } catch (error) {
       console.log(error);
@@ -29,18 +30,24 @@ function AvatarCard({ fighter }) {
       </div>
       {On ? (
         <center>
-        <div>
-          <img className="h-[100px]" src={`${Card?.sprites?.front_shiny}`} alt="" /> 
-          {
-            Card?.stats?.map((item,index)=>(
-              <div key={index} className="flex items-center justify-between  w-[200px]">
-              <h5>{item?.stat?.name}</h5>
-              <h5>{item?.base_stat}</h5>
-            </div>
-            ))
-          }
-       
-        </div>
+          <div>
+            <Link to={`/pokemon/${Card?.id}`}>
+              <img
+                className="h-[100px]"
+                src={`${Card?.sprites?.front_shiny}`}
+                alt=""
+              />
+            </Link>
+            {Card?.stats?.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-between  w-[200px]"
+              >
+                <h5>{item?.stat?.name}</h5>
+                <h5>{item?.base_stat}</h5>
+              </div>
+            ))}
+          </div>
         </center>
       ) : null}
     </section>

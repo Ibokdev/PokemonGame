@@ -7,12 +7,14 @@ import Header from "../component/common/header";
 
 function Home() {
   const [avatar,setAvatar] = useState({});
+  const [page, setPage] = useState("https://pokeapi.co/api/v2/pokemon/");
+
 
   const getAvatars = async () => {
     try {
-      const req = await axios.get("https://pokeapi.co/api/v2/pokemon/");
-      // console.log(req.data);
+      const req = await axios.get(page);
       setAvatar(req.data)
+      console.log(req?.data)
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +24,24 @@ function Home() {
 
    useEffect(() => {
     getAvatars();
-  }, []);
+  }, [page]);
+
+  const handleNext = ()=>{
+    if(avatar?.next){
+      setPage(avatar?.next)
+    }else{
+      alert("this is the last page")
+    }
+  }
+
+  
+  const handlePrevious = ()=>{
+    if(avatar?.previous){
+      setPage(avatar?.previous)
+    }else{
+      alert("this is the last page")
+    }
+  }
 
   return (
   <section>
@@ -33,6 +52,12 @@ function Home() {
           <AvatarCard fighter={avatar} key={index} />
         ))
       }
+    </div>
+    <div className='h-[100px] flex justify-between ml-5 mr-5 mt-10 pl-7 pr-7 md:ml-20 md:mr-20'>
+    <button onClick={()=>{handlePrevious()}} className='font-semibold h-[40px] w-[100px] bg-slate-100 rounded-lg shadow'>Previous</button>
+    <button onClick={()=>{handleNext()}} className='font-semibold h-[40px] w-[100px] bg-slate-100 rounded-lg shadow'>Next</button>
+    </div>
+    <div>
     </div>
   </section>
   )
